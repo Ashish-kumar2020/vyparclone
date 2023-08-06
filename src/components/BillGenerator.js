@@ -1,5 +1,7 @@
 // src/components/BillGenerator.js
 import React, { useState } from 'react';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable'; // Update this import line
 import ItemRow from './ItemRow';
 
 const BillGenerator = () => {
@@ -31,6 +33,18 @@ const BillGenerator = () => {
 
   const calculateTotal = () => {
     return items.reduce((total, item) => total + item.quantity * item.price, 0);
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.text('Bill Details', 10, 10);
+    doc.autoTable({
+      head: [['Item Name', 'Quantity', 'Unit Price', 'Total Price']],
+      body: items.map((item) => [item.name, item.quantity, `$${item.price}`, `$${item.quantity * item.price}`]),
+      startY: 20,
+    });
+    doc.text(`Total: $${calculateTotal()}`, 10, doc.autoTable.previous.finalY + 10);
+    doc.save('bill.pdf');
   };
 
   return (
@@ -75,29 +89,30 @@ const BillGenerator = () => {
       <button onClick={addItem} className="px-4 py-2 bg-blue-500 text-white rounded">
         Add Item
       </button>
-      <table className="mt-4 w-full">
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Total Price</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item) => (
-            <ItemRow key={item.id} item={item} onDelete={deleteItem} />
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="3" className="text-right font-bold">Total:</td>
-            <td>${calculateTotal()}</td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+      {items.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold mt-4">Added Items:</h2>
+          <table className="mt-2 w-full">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <ItemRow key={item.id} item={item} onDelete={deleteItem} />
+              ))}
+            </tbody>
+          </table>
+          <button onClick={generatePDF} className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
+            Generate PDF
+          </button>
+        </div>
+      )}
     </div>
   );
 };

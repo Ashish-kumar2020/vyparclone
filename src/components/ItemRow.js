@@ -6,8 +6,8 @@ const ItemRow = ({ item, onDelete }) => {
     <tr>
       <td>{item.name}</td>
       <td>{item.quantity}</td>
-      <td>Rs{item.price}</td>
-      <td>Rs{item.quantity * item.price}</td>
+      <td>${item.price}</td>
+      <td>${item.quantity * item.price}</td>
       <td>
         <button onClick={() => onDelete(item.id)} className="text-red-500">Delete</button>
       </td>
