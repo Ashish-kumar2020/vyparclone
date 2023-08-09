@@ -22,29 +22,29 @@ const TransactionForm = ({ addTransaction, persons }) => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
-      <div className="flex items-center">
-        <label className="mr-2">Transaction Type:</label>
+      <div className="flex flex-col">
+        <label className="mb-2">Transaction Type:</label>
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="border rounded py-1 px-2"
+          className="border rounded py-1 px-2 mb-2"
         >
           <option value="received">Received</option>
           <option value="spent">Spent</option>
         </select>
-        <label className="mx-2">Amount:</label>
+        <label className="mb-2">Amount:</label>
         <input
           type="number"
           placeholder="Enter amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          className="border rounded py-1 px-2 w-24"
+          className="border rounded py-1 px-2 mb-2"
         />
-        <label className="mx-2">Person:</label>
+        <label className="mb-2">Person:</label>
         <select
           value={selectedPerson}
           onChange={(e) => setSelectedPerson(e.target.value)}
-          className="border rounded py-1 px-2"
+          className="border rounded py-1 px-2 mb-2"
         >
           <option value="">Select person</option>
           {persons.map((person, index) => (
@@ -53,7 +53,7 @@ const TransactionForm = ({ addTransaction, persons }) => {
             </option>
           ))}
         </select>
-        <button type="submit" className="bg-blue-500 text-white ml-2 py-1 px-4 rounded">
+        <button type="submit" className="bg-blue-500 text-white py-1 px-4 rounded">
           Add
         </button>
       </div>
