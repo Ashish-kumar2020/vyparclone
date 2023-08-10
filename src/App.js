@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import TransactionForm from './components/TransactionForm';
 import TransactionHistory from './components/TransactionHistory';
 import PersonForm from './components/PersonForm';
-
+import StockTracker from './components/StockTracker';
+import SentItemsTracker from './components/SentItemsTracker';
+// import Navbar from './components/Navbar';
+import BillGenerator from './components/BillGenerator'
 function App() {
   const [transactions, setTransactions] = useState([]);
   const [persons, setPersons] = useState([]);
@@ -19,10 +22,14 @@ function App() {
   return (
     <div className="bg-gray-200 min-h-screen flex items-center justify-center">
       <div className="bg-white p-6 rounded shadow-md">
-        <h1 className="text-3xl font-semibold mb-4">Transaction Tracker App</h1>
+        {/* <Navbar/> */}
+      <h1>Transcation history</h1>
         <TransactionForm addTransaction={addTransaction} persons={persons} />
         <TransactionHistory transactions={transactions} />
         <PersonForm addPerson={addPerson} />
+        <BillGenerator/>
+        <StockTracker/>
+        <SentItemsTracker/>
       </div>
     </div>
   );
